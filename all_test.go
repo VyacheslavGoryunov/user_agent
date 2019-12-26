@@ -541,6 +541,12 @@ var uastrings = []struct {
 		ua:       "Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4",
 		expected: "Mozilla:5.0 Platform:iPhone OS:CPU iPhone OS 8_3 like Mac OS X Browser:Firefox-1.0 Engine:AppleWebKit-600.1.4 Bot:false Mobile:true",
 	},
+	{
+		title:      "Android arm_64",
+		ua:         "Mozilla/5.0 (Linux; arm_64; Android 8.1.0; Redmi 5 Plus) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 YaBrowser/19.12.1.121.00 Mobile Safari/537.36",
+		expected:   "Mozilla:5.0 Platform:Linux OS:Android 8.1.0 Browser:YaBrowser-19.12.1.121.00 Engine:AppleWebKit-537.36 Bot:false Mobile:true",
+		expectedOS: &OSInfo{"Android 8.1.0", "Android", "8.1.0"},
+	},
 
 	// Dalvik
 	{

@@ -75,7 +75,7 @@ func webkit(p *UserAgent, comment []string) {
 			p.browser.Name = "Android"
 		}
 		if len(comment) > 1 {
-			if comment[1] == "U" {
+			if comment[1] == "U" || comment[1] == "arm_64" {
 				if len(comment) > 2 {
 					p.os = comment[2]
 				} else {
@@ -86,7 +86,7 @@ func webkit(p *UserAgent, comment []string) {
 				p.os = comment[1]
 			}
 		}
-		if len(comment) > 3 {
+		if len(comment) > 3 && comment[1] != "arm_64" {
 			p.localization = comment[3]
 		} else if len(comment) == 3 {
 			_ = p.googleBot()
