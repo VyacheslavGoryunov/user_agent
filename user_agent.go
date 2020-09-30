@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2019 Miquel Sabaté Solà <mikisabate@gmail.com>
+// Copyright (C) 2012-2020 Miquel Sabaté Solà <mikisabate@gmail.com>
 // This file is licensed under the MIT license.
 // See the LICENSE file.
 
@@ -125,7 +125,8 @@ func (p *UserAgent) initialize() {
 	p.undecided = false
 }
 
-// Parse the given User-Agent string and get the resulting UserAgent object.
+// New parses the given User-Agent string and get the resulting UserAgent
+// object.
 //
 // Returns an UserAgent object that has been initialized after parsing
 // the given User-Agent string.

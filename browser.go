@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2019 Miquel Sabaté Solà <mikisabate@gmail.com>
+// Copyright (C) 2012-2020 Miquel Sabaté Solà <mikisabate@gmail.com>
 // This file is licensed under the MIT license.
 // See the LICENSE file.
 
@@ -11,7 +11,7 @@ import (
 
 var ie11Regexp = regexp.MustCompile("^rv:(.+)$")
 
-// A struct containing all the information that we might be
+// Browser is a struct containing all the information that we might be
 // interested from the browser.
 type Browser struct {
 	// The name of the browser's engine.
@@ -59,12 +59,26 @@ func (p *UserAgent) detectBrowser(sections []section) {
 			}
 			p.browser.Version = sections[sectionIndex].version
 			if engine.name == "AppleWebKit" {
+				for _, comment := range engine.comment {
+					if len(comment) > 5 &&
+						(strings.HasPrefix(comment, "Googlebot") || strings.HasPrefix(comment, "bingbot")) {
+						p.undecided = true
+						break
+					}
+				}
 				switch sections[slen-1].name {
 				case "Edge":
 					p.browser.Name = "Edge"
 					p.browser.Version = sections[slen-1].version
 					p.browser.Engine = "EdgeHTML"
 					p.browser.EngineVersion = ""
+				case "Edg":
+					if p.undecided != true {
+						p.browser.Name = "Edge"
+						p.browser.Version = sections[slen-1].version
+						p.browser.Engine = "AppleWebKit"
+						p.browser.EngineVersion = sections[slen-2].version
+					}
 				case "OPR":
 					p.browser.Name = "Opera"
 					p.browser.Version = sections[slen-1].version
@@ -74,22 +88,27 @@ func (p *UserAgent) detectBrowser(sections []section) {
 						p.browser.Name = "YaBrowser"
 						p.browser.Version = sections[slen-3].version
 					default:
-						switch sections[sectionIndex].name {
-						case "Chrome", "CriOS":
-							p.browser.Name = "Chrome"
-						case "Chromium":
-							p.browser.Name = "Chromium"
-						case "FxiOS":
-							p.browser.Name = "Firefox"
-						case "SamsungBrowser":
-							p.browser.Name = "SamsungBrowser"
+						switch sections[slen-2].name {
+						case "Electron":
+							p.browser.Name = "Electron"
+							p.browser.Version = sections[slen-2].version
 						default:
-							p.browser.Name = "Safari"
+							switch sections[sectionIndex].name {
+							case "Chrome", "CriOS":
+								p.browser.Name = "Chrome"
+							case "Chromium":
+								p.browser.Name = "Chromium"
+							case "FxiOS":
+								p.browser.Name = "Firefox"
+							default:
+								p.browser.Name = "Safari"
+							}
 						}
 					}
 					// It's possible the google-bot emulates these now
 					for _, comment := range engine.comment {
-						if len(comment) > 5 && strings.HasPrefix(comment, "Googlebot") {
+						if len(comment) > 5 &&
+							(strings.HasPrefix(comment, "Googlebot") || strings.HasPrefix(comment, "bingbot")) {
 							p.undecided = true
 							break
 						}

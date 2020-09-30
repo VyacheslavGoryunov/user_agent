@@ -45,6 +45,21 @@ var uastrings = []struct {
 		expected: "Mozilla:5.0 Browser:bingbot-2.0 Bot:true Mobile:false",
 	},
 	{
+		title:    "BingBotSmartphone(iPhone)",
+		ua:       "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+		expected: "Mozilla:5.0 Browser:bingbot-2.0 Bot:true Mobile:true",
+	},
+	{
+		title:    "BingBotSmartphone(Android)",
+		ua:       "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 Edg/80.0.345.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+		expected: "Mozilla:5.0 Browser:bingbot-2.0 Bot:true Mobile:true",
+	},
+	{
+		title:    "BingBotEmulateMozilla",
+		ua:       "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm) Chrome/41.0.2272.96 Mobile Safari/537.36 Edg/80.0.345.0",
+		expected: "Mozilla:5.0 Browser:bingbot-2.0 Bot:true Mobile:true",
+	},
+	{
 		title:    "BaiduBot",
 		ua:       "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)",
 		expected: "Mozilla:5.0 Browser:Baiduspider-2.0 Bot:true Mobile:false",
@@ -103,6 +118,16 @@ var uastrings = []struct {
 		title:    "AdsBotGoogleMobile",
 		ua:       "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 (compatible; AdsBot-Google-Mobile; +http://www.google.com/mobile/adsbot.html)",
 		expected: "Mozilla:5.0 Browser:AdsBot-Google-Mobile Bot:true Mobile:true",
+	},
+	{
+		title:    "APIs-Google",
+		ua:       "APIs-Google (+https://developers.google.com/webmasters/APIs-Google.html)",
+		expected: "Browser:APIs-Google Bot:true Mobile:false",
+	},
+	{
+		title:    "iMessage-preview",
+		ua:       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.4 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.4 facebookexternalhit/1.1 Facebot Twitterbot/1.0",
+		expected: "Mozilla:5.0 Platform:Macintosh Browser:iMessage-Preview-9.0.1 Bot:true Mobile:false",
 	},
 
 	// Internet Explorer
@@ -183,6 +208,14 @@ var uastrings = []struct {
 		title:    "EdgeMobile",
 		ua:       "Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; DEVICE INFO) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.10240",
 		expected: "Mozilla:5.0 Platform:Windows OS:Windows Phone 10.0 Browser:Edge-12.10240 Engine:EdgeHTML Bot:false Mobile:true",
+	},
+
+	// Microsoft Chromium Edge
+	{
+		title:      "EdgeDesktop",
+		ua:         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37",
+		expected:   "Mozilla:5.0 Platform:Windows OS:Windows 10 Browser:Edge-83.0.478.37 Engine:AppleWebKit-537.36 Bot:false Mobile:false",
+		expectedOS: &OSInfo{"Windows 10", "Windows", "10"},
 	},
 
 	// Gecko
@@ -542,6 +575,22 @@ var uastrings = []struct {
 		expected: "Mozilla:5.0 Platform:iPhone OS:CPU iPhone OS 8_3 like Mac OS X Browser:Firefox-1.0 Engine:AppleWebKit-600.1.4 Bot:false Mobile:true",
 	},
 	{
+		title:    "Firefox Focus for iOS",
+		ua:       "Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/7.0.4 Mobile/16B91 Safari/605.1.15",
+		expected: "Mozilla:5.0 Platform:iPhone OS:CPU iPhone OS 12_1 like Mac OS X Browser:Firefox-7.0.4 Engine:AppleWebKit-605.1.15 Bot:false Mobile:true",
+	},
+	{
+		title:    "Firefox on iPad",
+		ua:       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/24.1 Safari/605.1.15",
+		expected: "Mozilla:5.0 Platform:iPad OS:Intel Mac OS X 10.15 Browser:Firefox-24.1 Engine:AppleWebKit-605.1.15 Bot:false Mobile:true",
+	},
+	{
+		title:    "Electron",
+		ua:       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) CozyDrive/3.17.0  Chrome/73.0.3683.119 Electron/5.0.0 Safari/537.36",
+		expected: "Mozilla:5.0 Platform:Windows OS:Windows 10 Browser:Electron-5.0.0 Engine:AppleWebKit-537.36 Bot:false Mobile:false",
+	},
+
+	{
 		title:      "Android arm_64",
 		ua:         "Mozilla/5.0 (Linux; arm_64; Android 8.1.0; Redmi 5 Plus) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 YaBrowser/19.12.1.121.00 Mobile Safari/537.36",
 		expected:   "Mozilla:5.0 Platform:Linux OS:Android 8.1.0 Browser:YaBrowser-19.12.1.121.00 Engine:AppleWebKit-537.36 Bot:false Mobile:true",
@@ -589,6 +638,18 @@ var uastrings = []struct {
 		title:    "Facebook - No Browser Or OS",
 		ua:       "[FBAN/FB4A;FBAV/16.0.0.20.15;FBBV/4061184;FBDM/{density=1.5,width=540,height=960};FBLC/en_US;FB_FW/2;FBCR/MY CELCOM;FBPN/com.facebook.katana;FBDV/Lenovo A850+;FBSV/4.2.2;FBOP/1;FBCA/armeabi-v7a:armeabi;]",
 		expected: "Bot:false Mobile:false",
+	},
+
+	// arm_64
+	{
+		title:    "Samsung S7 Edge - YaBrowser",
+		ua:       "Mozilla/5.0 (Linux; arm_64; Android 8.0.0; SM-G935F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 YaBrowser/19.12.3.101.00 Mobile Safari/537.36",
+		expected: "Mozilla:5.0 Platform:Linux OS:Android 8.0.0 Localization:SM-G935F Browser:YaBrowser-19.12.3.101.00 Engine:AppleWebKit-537.36 Bot:false Mobile:true",
+	},
+	{
+		title:    "HUAWEI P20 lite - YaBrowser",
+		ua:       "Mozilla/5.0 (Linux; arm_64; Android 9; ANE-LX2J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.136 YaBrowser/20.2.6.114.00 Mobile Safari/537.36",
+		expected: "Mozilla:5.0 Platform:Linux OS:Android 9 Localization:ANE-LX2J Browser:YaBrowser-20.2.6.114.00 Engine:AppleWebKit-537.36 Bot:false Mobile:true",
 	},
 }
 

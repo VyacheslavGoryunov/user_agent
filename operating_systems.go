@@ -1,12 +1,15 @@
-// Copyright (C) 2012-2019 Miquel Sabaté Solà <mikisabate@gmail.com>
+// Copyright (C) 2012-2020 Miquel Sabaté Solà <mikisabate@gmail.com>
 // This file is licensed under the MIT license.
 // See the LICENSE file.
 
 package user_agent
 
-import "strings"
+import (
+	"strings"
+)
 
-// Represents full information on the operating system extracted from the user agent.
+// OSInfo represents full information on the operating system extracted from the
+// user agent.
 type OSInfo struct {
 	// Full name of the operating system. This is identical to the output of ua.OS()
 	FullName string
@@ -89,7 +92,7 @@ func webkit(p *UserAgent, comment []string) {
 		if len(comment) > 3 && comment[1] != "arm_64" {
 			p.localization = comment[3]
 		} else if len(comment) == 3 {
-			_ = p.googleBot()
+			_ = p.googleOrBingBot()
 		}
 	} else if len(comment) > 0 {
 		if len(comment) > 3 {
@@ -100,7 +103,7 @@ func webkit(p *UserAgent, comment []string) {
 		} else if len(comment) < 2 {
 			p.localization = comment[0]
 		} else if len(comment) < 3 {
-			if !p.googleBot() {
+			if !p.googleOrBingBot() && !p.iMessagePreview() {
 				p.os = normalizeOS(comment[1])
 			}
 		} else {
@@ -113,6 +116,12 @@ func webkit(p *UserAgent, comment []string) {
 			}
 		}
 	}
+
+	// Special case for Firefox on iPad, where the platform is advertised as Macintosh instead of iPad
+	if p.platform == "Macintosh" && p.browser.Engine == "AppleWebKit" && p.browser.Name == "Firefox" {
+		p.platform = "iPad"
+		p.mobile = true
+	}
 }
 
 // Guess the OS, the localization and if this is a mobile device
@@ -122,7 +131,7 @@ func webkit(p *UserAgent, comment []string) {
 // argument is a slice of strings containing the comment.
 func gecko(p *UserAgent, comment []string) {
 	if len(comment) > 1 {
-		if comment[1] == "U" {
+		if comment[1] == "U" || comment[1] == "arm_64" {
 			if len(comment) > 2 {
 				p.os = normalizeOS(comment[2])
 			} else {
