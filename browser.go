@@ -100,6 +100,8 @@ func (p *UserAgent) detectBrowser(sections []section) {
 								p.browser.Name = "Chromium"
 							case "FxiOS":
 								p.browser.Name = "Firefox"
+							case "SamsungBrowser":
+								p.browser.Name = "SamsungBrowser"
 							default:
 								p.browser.Name = "Safari"
 							}
