@@ -285,6 +285,10 @@ func (p *UserAgent) detectOS(s section) {
 		if len(s.comment) > 0 {
 			dalvik(p, s.comment)
 		}
+	} else if s.name == "iOS" {
+		p.os = s.name + " " + s.version
+		p.mobile = true
+
 	} else {
 		// Check whether this is a bot or just a weird browser.
 		p.undecided = true

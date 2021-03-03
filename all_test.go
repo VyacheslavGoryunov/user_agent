@@ -651,6 +651,14 @@ var uastrings = []struct {
 		ua:       "Mozilla/5.0 (Linux; arm_64; Android 9; ANE-LX2J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.136 YaBrowser/20.2.6.114.00 Mobile Safari/537.36",
 		expected: "Mozilla:5.0 Platform:Linux OS:Android 9 Localization:ANE-LX2J Browser:YaBrowser-20.2.6.114.00 Engine:AppleWebKit-537.36 Bot:false Mobile:true",
 	},
+
+	// iOS Calendar
+	{
+		title:      "iOS Calendar",
+		ua:         "iOS/13.6 (17G68) dataaccessd/1.0",
+		expected:   "OS:iOS 13.6 Engine:dataaccessd-1.0 Bot:false Mobile:true",
+		expectedOS: &OSInfo{"iOS 13.6", "iOS", "13.6"},
+	},
 }
 
 // Internal: beautify the UserAgent reference into a string so it can be
