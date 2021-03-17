@@ -364,6 +364,10 @@ func (p *UserAgent) OSInfo() OSInfo {
 		version = s[1]
 	}
 
+	if name == "OS" && p.platform == "iPhone" {
+		name = "iPhone OS"
+	}
+
 	// Special case for versions that use underscores
 	version = strings.Replace(version, "_", ".", -1)
 
