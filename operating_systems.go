@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2020 Miquel Sabaté Solà <mikisabate@gmail.com>
+// Copyright (C) 2012-2021 Miquel Sabaté Solà <mikisabate@gmail.com>
 // This file is licensed under the MIT license.
 // See the LICENSE file.
 
@@ -288,7 +288,10 @@ func (p *UserAgent) detectOS(s section) {
 	} else if s.name == "iOS" {
 		p.os = s.name + " " + s.version
 		p.mobile = true
-
+	} else if s.name == "okhttp" {
+		p.mobile = true
+		p.browser.Name = "OkHttp"
+		p.browser.Version = s.version
 	} else {
 		// Check whether this is a bot or just a weird browser.
 		p.undecided = true

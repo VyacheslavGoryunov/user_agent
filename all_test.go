@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2019 Miquel Sabaté Solà <mikisabate@gmail.com>
+// Copyright (C) 2012-2021 Miquel Sabaté Solà <mikisabate@gmail.com>
 // This file is licensed under the MIT license.
 // See the LICENSE file.
 
@@ -436,6 +436,11 @@ var uastrings = []struct {
 		title:    "Curl",
 		ua:       "curl/7.28.1",
 		expected: "Browser:curl-7.28.1 Bot:false Mobile:false",
+	},
+	{
+		title:    "OkHttp",
+		ua:       "okhttp/4.2.2",
+		expected: "Browser:OkHttp-4.2.2 Bot:false Mobile:true",
 	},
 
 	// WebKit
